@@ -37,8 +37,8 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 
 	add_action( 'plugins_loaded', array( 'WP_Table_Shortsodes', 'get_object' ) );
 
-		/**
-	* Piktochart Class
+	/**
+	* WP_Table_Shortsodes Class
 	* 
 	* @author birgire
 	*
