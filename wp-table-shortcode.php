@@ -160,9 +160,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 			$rows = explode( PHP_EOL, $s );			
 			if( ! is_array( $rows ) )
 				$rows = array();
-			
-			print_r( $items );
-			
+						
 			return ( $items >= 0) ? array_slice( $rows, $offset, $items ) : array_slice( $rows, $offset );
 		}
 		
