@@ -5,7 +5,7 @@
  * Author URI: https://github.com/birgire/
  * Version: 0.1
  * Text Domain: wp-table-shortcode
- * Description: This plugin adds the [tafla] shortcode for Multi-Site WordPress that displays HTML tables.
+ * Description: This plugin adds the [tafla] shortcode for Multi-Site WordPress that help you to display HTML tables.
  * License: GPL2
  */
 /* 
@@ -95,18 +95,20 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 */
 
 		 public function tafla_callback( $atts, $content ) 
-		 {
-	
+		 {	
 			$atts = shortcode_atts( array(
-						'id' 		=> '',
-						'class'		=> '',
-						'width' 	=> '600',
+						'class'		=> 'tafla',
+						'width' 	=> '100%',
 						'style'		=> '',
 						'head'		=> '0',
 					), $atts, $this->plugin_domain );
 		
+			//
 			// Generate the output
-			$html = '<table>';
+			//
+			
+			// open table
+			$html = sprintf( '<table class="%s" width="%s" style="">', $atts['class'], $atts['width'], $atts['style'] );
 			
 			// table header
 			if( '1' === $atts['head'] )
@@ -138,6 +140,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 			}
 			$html .= '</tbody>';
 
+			// close table
 			$html .= '</table>';
 
 			return $html;		
