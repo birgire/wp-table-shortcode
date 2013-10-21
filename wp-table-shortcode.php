@@ -45,7 +45,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 	*/
 	class WP_Table_Shortsodes {
 		
-		public $delimiter		= '|';
+		public $delimiter	= '|';
 		private $plugin_domain 	= 'wp_table_shortsodes';
 		static private $obj 	= NULL;
 	
@@ -74,11 +74,10 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @return  object $obj
 		 */
 
-		 public function get_object () {
+		 public function get_object() {
 			
-			if ( NULL === self :: $obj ) {
+			if ( NULL === self :: $obj )
 				self :: $obj = new self;
-			}
 			
 			return self :: $obj;
 		}
@@ -152,6 +151,8 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @access  public
 		 * @since   0.1
 		 * @param string $s
+		 * @param integer $offset
+		 * @param integer $items
 		 * @return array $rows
 		 */
 
@@ -170,6 +171,8 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @access  public
 		 * @since   0.1
 		 * @param string $s
+		 * @param integer $offset
+		 * @param integer $items
 		 * @return array $rows
 		 */
 
