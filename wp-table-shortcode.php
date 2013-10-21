@@ -3,8 +3,8 @@
  * Plugin Name: WP Table Shortcode
  * Author: birgire
  * Author URI: https://github.com/birgire/
- * Version: 0.1
- * Text Domain: wp-table-shortcode
+ * Version: 0.2
+ * Text Domain: wp_table_shortcode
  * Description: This plugin adds the [tafla] shortcode for Multi-Site WordPress that help you to display HTML tables.
  * License: GPL2
  */
@@ -45,7 +45,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 	*/
 	class WP_Table_Shortsodes {
 		
-		public $delimiter	= '|';
+		public $delimiter		= '|';
 		private $plugin_domain 	= 'wp_table_shortsodes';
 		static private $obj 	= NULL;
 	
@@ -58,11 +58,10 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @return  void		
  		 */
 
-		public function __construct() {
-		
+		public function __construct() 
+		{
 			// register the shortcode
-			add_shortcode( 'tafla', array( $this, 'tafla_callback' ) );
-											
+			add_shortcode( 'tafla', array( $this, 'tafla_callback' ) );									
 		}	
 	
 		
@@ -74,10 +73,11 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @return  object $obj
 		 */
 
-		 public function get_object() {
-			
-			if ( NULL === self :: $obj )
+		 public function get_object () 
+		 {	
+			if ( NULL === self :: $obj ) {
 				self :: $obj = new self;
+			}
 			
 			return self :: $obj;
 		}
@@ -102,15 +102,28 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 						'head'		=> '0',
 					), $atts, $this->plugin_domain );
 		
+			// escape user input
+			$content 		= esc_textarea( strip_tags( $content ) );
+			$atts['class'] 	= esc_attr( $atts['class'] );
+			$atts['width'] 	= esc_attr( $atts['width'] );
+			$atts['style'] 	= esc_attr( $atts['style'] );
+		
 			//
 			// Generate the output
 			//
-			
-			// open table
-			$html = sprintf( '<table class="%s" width="%s" style="">', $atts['class'], $atts['width'], $atts['style'] );
-			
-			// table header
-			if( '1' === $atts['head'] )
+						
+			// Open table
+			$html = sprintf( '<table class="%s" width="%s" style="%s">', 
+						$atts['class'], 
+						$atts['width'], 
+						$atts['style']
+					);
+
+			// row offset - 1 if no header is displayed, otherwise it's equal to 2
+			$table_body_offset = 1;
+					
+			// Table header - the head attribute can be 'on', 'true', '1' to activate it
+			if( filter_var( $atts['head'], FILTER_VALIDATE_BOOLEAN ) )
 			{
 				$html .= '<thead>';
 				foreach( $this->rows( $content, 1, 1 ) as $row )
@@ -122,13 +135,14 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 					}
 					$html .= '</tr>';
 				}
-				$html .= '</thead>';
-			
+				$html .= '</thead>';			
+				
+				$table_body_offset = 2;
 			}
 
-			// table body
+			// Table body
 			$html .= '<tbody>';
-			foreach( $this->rows( $content, 2, -1 ) as $row )
+			foreach( $this->rows( $content, $table_body_offset, -1 ) as $row )
 			{				
 				$html .= '<tr>';
 				foreach( $this->cols( $row ) as $col )
@@ -139,7 +153,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 			}
 			$html .= '</tbody>';
 
-			// close table
+			// Close table
 			$html .= '</table>';
 
 			return $html;		
@@ -151,8 +165,6 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @access  public
 		 * @since   0.1
 		 * @param string $s
-		 * @param integer $offset
-		 * @param integer $items
 		 * @return array $rows
 		 */
 
@@ -171,8 +183,6 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @access  public
 		 * @since   0.1
 		 * @param string $s
-		 * @param integer $offset
-		 * @param integer $items
 		 * @return array $rows
 		 */
 
