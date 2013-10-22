@@ -3,7 +3,7 @@
  * Plugin Name: WP Table Shortcode
  * Author: birgire
  * Author URI: https://github.com/birgire/
- * Version: 0.2
+ * Version: 0.3
  * Text Domain: wp_table_shortcode
  * Description: This plugin adds the [tafla] shortcode for Multi-Site WordPress that help you to display HTML tables.
  * License: GPL2
@@ -103,7 +103,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 					), $atts, $this->plugin_domain );
 		
 			// escape user input
-			$content 		= esc_textarea( strip_tags( $content ) );
+			$content 		= esc_textarea( trim( strip_tags( $content ) ) );
 			$atts['class'] 	= esc_attr( $atts['class'] );
 			$atts['width'] 	= esc_attr( $atts['width'] );
 			$atts['style'] 	= esc_attr( $atts['style'] );
@@ -120,13 +120,13 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 					);
 
 			// row offset - 1 if no header is displayed, otherwise it's equal to 2
-			$table_body_offset = 1;
+			$table_body_offset = 0;
 					
 			// Table header - the head attribute can be 'on', 'true', '1' to activate it
 			if( filter_var( $atts['head'], FILTER_VALIDATE_BOOLEAN ) )
 			{
 				$html .= '<thead>';
-				foreach( $this->split( $content, PHP_EOL, 1, 1 ) as $row )
+				foreach( $this->split( $content, PHP_EOL, 0, 1 ) as $row )
 				{				
 					$html .= '<tr>';
 					foreach( $this->split( $row ) as $col )
@@ -137,7 +137,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 				}
 				$html .= '</thead>';			
 				
-				$table_body_offset = 2;
+				$table_body_offset = 1;
 			}
 
 			// Table body
@@ -160,7 +160,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		}
 		
 		/**
-		 * split string based on a given delimeter
+		 * split string based on a given delimiter
 		 *
 		 * @access  public
 		 * @since   0.2
