@@ -46,8 +46,8 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 	class WP_Table_Shortsodes {
 		
 		public $delimiter	= '|';
-		private $plugin_domain 	= 'wp_table_shortsodes';
-		static private $obj 	= NULL;
+		private $plugin_domain	= 'wp_table_shortsodes';
+		static private $obj	= NULL;
 	
 		/**
 		 * The constructor
@@ -96,10 +96,10 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 public function tafla_callback( $atts, $content ) 
 		 {	
 			$atts = shortcode_atts( array(
-						'class'		=> 'tafla',
-						'width' 	=> '100%',
-						'style'		=> '',
-						'head'		=> '0',
+						'class'	=> 'tafla',
+						'width'	=> '100%',
+						'style'	=> '',
+						'head'	=> '0',
 					), $atts, $this->plugin_domain );
 		
 			// escape user input
