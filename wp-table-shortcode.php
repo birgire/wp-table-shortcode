@@ -45,7 +45,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 	*/
 	class WP_Table_Shortsodes {
 		
-		public $delimiter		= '|';
+		public $delimiter	= '|';
 		private $plugin_domain 	= 'wp_table_shortsodes';
 		static private $obj 	= NULL;
 	
@@ -119,7 +119,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 						$atts['style']
 					);
 
-			// row offset - 1 if no header is displayed, otherwise it's equal to 2
+			// row offset: 0 if no header is displayed, otherwise it's equal to 1
 			$table_body_offset = 0;
 					
 			// Table header - the head attribute can be 'on', 'true', '1' to activate it
