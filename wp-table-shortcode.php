@@ -126,10 +126,10 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 			if( filter_var( $atts['head'], FILTER_VALIDATE_BOOLEAN ) )
 			{
 				$html .= '<thead>';
-				foreach( $this->rows( $content, 1, 1 ) as $row )
+				foreach( $this->split( $content, PHP_EOL, 1, 1 ) as $row )
 				{				
 					$html .= '<tr>';
-					foreach( $this->cols( $row ) as $col )
+					foreach( $this->split( $row ) as $col )
 					{
 						$html .= sprintf( '<th>%s</th>', $col );
 					}
@@ -142,10 +142,10 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 
 			// Table body
 			$html .= '<tbody>';
-			foreach( $this->rows( $content, $table_body_offset, -1 ) as $row )
+			foreach( $this->split( $content, PHP_EOL, $table_body_offset, -1 ) as $row )
 			{				
 				$html .= '<tr>';
-				foreach( $this->cols( $row ) as $col )
+				foreach( $this->split( $row ) as $col )
 				{
 					$html .= sprintf( '<td>%s</td>', $col );
 				}
@@ -160,41 +160,26 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		}
 		
 		/**
-		 * Make new rows from string based on PHP_EOL
+		 * split string based on a given delimeter
 		 *
 		 * @access  public
-		 * @since   0.1
-		 * @param string $s
-		 * @return array $rows
+		 * @since   0.2
+		 * @param string $s Input string
+		 * @param string $delimiter Delimiter
+		 * @param integer $offset Array slice offset
+		 * @param integer $items Number of array slice items to return
+		 * @return array $rows Resulting array
 		 */
 
-		public function rows( $s, $offset = 0, $items = -1 ) 
+		public function split( $s, $delimiter = '|', $offset = 0, $items = -1 ) 
 		{
-			$rows = explode( PHP_EOL, $s );			
+			$rows = explode( $delimiter, $s );			
 			if( ! is_array( $rows ) )
 				$rows = array();
 						
 			return ( $items >= 0) ? array_slice( $rows, $offset, $items ) : array_slice( $rows, $offset );
 		}
 		
-		/**
-		 * Make new columns from string based on PHP_EOL
-		 *
-		 * @access  public
-		 * @since   0.1
-		 * @param string $s
-		 * @return array $rows
-		 */
-
-		public function cols( $s, $offset = 0, $items = -1 ) 
-		{
-			$cols = explode( $this->delimiter, $s );			
-			if( ! is_array( $cols ) )
-				$cols = array();
-				
-			return ( $items >= 0 ) ? array_slice( $cols, $offset, $items ) : $cols;
-		}
-
 	} // end class
 
 	
