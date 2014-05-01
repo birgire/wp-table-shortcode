@@ -3,7 +3,7 @@
  * Plugin Name: WP Table Shortcode
  * Author: birgire
  * Author URI: https://github.com/birgire/
- * Version: 0.3
+ * Version: 0.3.1
  * Text Domain: wp_table_shortcode
  * Description: This plugin adds the [tafla] shortcode for Multi-Site WordPress that help you to display HTML tables.
  * License: GPL2
@@ -45,9 +45,9 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 	*/
 	class WP_Table_Shortsodes {
 		
-		public $delimiter	= '|';
+		public $delimiter		= '|';
 		private $plugin_domain	= 'wp_table_shortsodes';
-		static private $obj	= NULL;
+		static private $obj		= NULL;
 	
 		/**
 		 * The constructor
@@ -73,7 +73,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 		 * @return  object $obj
 		 */
 
-		 public function get_object () 
+		 public static function get_object () 
 		 {	
 			if ( NULL === self :: $obj ) {
 				self :: $obj = new self;
@@ -177,7 +177,7 @@ if( ! class_exists( 'WP_Table_Shortsodes' ) ):
 			if( ! is_array( $rows ) )
 				$rows = array();
 						
-			return ( $items >= 0) ? array_slice( $rows, $offset, $items ) : array_slice( $rows, $offset );
+			return ( $items >= 0 ) ? array_slice( $rows, $offset, $items ) : array_slice( $rows, $offset );
 		}
 		
 	} // end class
